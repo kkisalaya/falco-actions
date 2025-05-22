@@ -130,7 +130,7 @@ runs:
       if [ "${{ inputs.verbose }}" = "true" ]; then
         echo "Custom filters: $CUSTOM_FILTERS"
       fi
-      OUTBOUND_OUTPUT="%fd.sip,%fd.sport,%proc.name,%proc.exepath,%user.name"
+      OUTBOUND_OUTPUT="%evt.time.iso8601,%fd.sip,%fd.sport,%proc.name,%proc.exepath,%user.name"
       ${{github.action_path}}/../common/run_sysdig.sh filter "/tmp/capture.scap" "$OUTBOUND_FILTER $CUSTOM_FILTERS" "$OUTBOUND_OUTPUT" "/tmp/outbound.txt"
 
   - name: Extract written files
@@ -147,7 +147,7 @@ runs:
       if [ "${{ inputs.verbose }}" = "true" ]; then
         echo "Custom filters: $CUSTOM_FILTERS"
       fi
-      FILE_WRITTEN_OUTPUT="%fd.name,%proc.name,%proc.exepath,%proc.pexepath,%user.name"
+      FILE_WRITTEN_OUTPUT="%evt.time.iso8601,%fd.name,%proc.name,%proc.exepath,%proc.pexepath,%user.name"
       ${{github.action_path}}/../common/run_sysdig.sh filter "/tmp/capture.scap" "$FILE_WRITTEN_FILTER $CUSTOM_FILTERS" "$FILE_WRITTEN_OUTPUT" "/tmp/files_written.txt"
 
   - name: Extract processes information
@@ -164,7 +164,7 @@ runs:
       if [ "${{ inputs.verbose }}" = "true" ]; then
         echo "Custom filters: $CUSTOM_FILTERS"
       fi
-      PROC_FILTER_OUTPUT="%proc.name,%proc.exepath,%proc.pname,%proc.pexepath,%user.name"
+      PROC_FILTER_OUTPUT="%evt.time.iso8601,%proc.name,%proc.exepath,%proc.pname,%proc.pexepath,%user.name"
       ${{github.action_path}}/../common/run_sysdig.sh filter "/tmp/capture.scap" "$PROC_FILTER $CUSTOM_FILTERS" "$PROC_FILTER_OUTPUT" "/tmp/proc.txt"
 
   - name: Extract chisels information for summary
